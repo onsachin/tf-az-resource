@@ -1,11 +1,11 @@
 resource "azurerm_resource_group" "learn_rsg" {
  name = "learn-tf-test"
- location = "South India"
+ location = "southindia"
 }
 
 resource "azurerm_application_insights" "learn_app_insihgt" {
   name = "learn-tf-appinsights"
-  location = "South India"
+  location = "southindia"
   application_type = "web"
   resource_group_name = "learn-tf-test"
 
