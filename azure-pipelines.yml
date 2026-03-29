@@ -18,6 +18,11 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
+- task: TerraformInstaller@1
+  displayName: 'Install terraform'
+  inputs:
+    terraformVersion: 'latest'
+
 - task: TerraformTask@5
   displayName: 'TF init'
   inputs:
@@ -31,40 +36,40 @@ steps:
        backendAzureRmContainerName: 'prod-tf-state'
        backendAzureRmKey: 'prod.terraform.tfstate'
 
-  #  - task: TerraformTask@5
-  #    displayName: 'validate'
-  #    inputs:
-  #      provider: 'azurerm'
-  #      command: 'validate'
+- task: TerraformTask@5
+  displayName: 'validate'
+  inputs:
+      provider: 'azurerm'
+      command: 'validate'
  
-  #  - task: TerraformTask@5
-  #    displayName: "TF format"
-  #    inputs:
-  #        provider: 'azurerm'
-  #        command: 'custom'
-  #        outputTo: 'console'
-  #        customCommand: 'fmt'
-  #        environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
-  #        environmentAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
+- task: TerraformTask@5
+  displayName: "TF format"
+  inputs:
+         provider: 'azurerm'
+         command: 'custom'
+         outputTo: 'console'
+         customCommand: 'fmt'
+         environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+         environmentAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
 
-  #  - task: TerraformTask@5
-  #    displayName: 'TF Plan'
-  #    inputs:
-  #        provider: 'azurerm'
-  #        command: 'plan'
-  #        commanOptions: '-out $(Build.SourceDirectory)/tfplanfile'
-  #        environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+- task: TerraformTask@5
+  displayName: 'TF Plan'
+  inputs:
+         provider: 'azurerm'
+         command: 'plan'
+         commanOptions: '-out $(Build.SourceDirectory)/tfplanfile'
+         environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
 
-  #  - task: ArchiveFiles@2
-  #    inputs:
-  #       rootFolderOrFile: '$(Build.BinariesDirectory)'
-  #       includeRootFolder: true
-  #       archiveType: 'zip'
-  #       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-  #       replaceExistingArchive: true
+- task: ArchiveFiles@2
+  inputs:
+        rootFolderOrFile: '$(Build.BinariesDirectory)'
+        includeRootFolder: true
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
 
-  #  - task: PublishBuildArtifacts@1
-  #    inputs:
-  #       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-  #       ArtifactName: '$(Build.BuildId)-build'
-  #       publishLocation: 'Container'  
+- task: PublishBuildArtifacts@1
+  inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: '$(Build.BuildId)-build'
+        publishLocation: 'Container'  
