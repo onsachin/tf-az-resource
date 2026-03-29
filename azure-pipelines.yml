@@ -1,0 +1,70 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- task: TerraformTask@5
+  displayName: 'TF init'
+  inputs:
+       provider: 'azurerm'
+       command: 'init'
+       backendAzureRmUseEntraIdForAuthentication: false
+       backendServiceArm: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+       backendAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
+       backendAzureRmResourceGroupName: 'azure-storage-rg'
+       backendAzureRmStorageAccountName: 'onsachinstorage'
+       backendAzureRmContainerName: 'prod-tf-state'
+       backendAzureRmKey: 'prod.terraform.tfstate'
+
+  #  - task: TerraformTask@5
+  #    displayName: 'validate'
+  #    inputs:
+  #      provider: 'azurerm'
+  #      command: 'validate'
+ 
+  #  - task: TerraformTask@5
+  #    displayName: "TF format"
+  #    inputs:
+  #        provider: 'azurerm'
+  #        command: 'custom'
+  #        outputTo: 'console'
+  #        customCommand: 'fmt'
+  #        environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+  #        environmentAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
+
+  #  - task: TerraformTask@5
+  #    displayName: 'TF Plan'
+  #    inputs:
+  #        provider: 'azurerm'
+  #        command: 'plan'
+  #        commanOptions: '-out $(Build.SourceDirectory)/tfplanfile'
+  #        environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+
+  #  - task: ArchiveFiles@2
+  #    inputs:
+  #       rootFolderOrFile: '$(Build.BinariesDirectory)'
+  #       includeRootFolder: true
+  #       archiveType: 'zip'
+  #       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+  #       replaceExistingArchive: true
+
+  #  - task: PublishBuildArtifacts@1
+  #    inputs:
+  #       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+  #       ArtifactName: '$(Build.BuildId)-build'
+  #       publishLocation: 'Container'  
