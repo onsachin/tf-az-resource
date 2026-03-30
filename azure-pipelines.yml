@@ -59,6 +59,7 @@ steps:
          command: 'plan'
          commanOptions: '-out $(Build.SourceDirectory)/tfplanfile'
          environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+         environmentAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
 
 - task: ArchiveFiles@2
   inputs:
