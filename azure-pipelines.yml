@@ -36,35 +36,34 @@ steps:
        backendAzureRmContainerName: 'prod-tf-state'
        backendAzureRmKey: 'prod.terraform.tfstate'
 
+
 - task: TerraformTask@5
   displayName: 'validate'
   inputs:
-      provider: 'azurerm'
-      command: 'validate'
+    provider: 'azurerm'
+    command: 'validate'
  
 - task: TerraformTask@5
   displayName: "TF format"
   inputs:
-         provider: 'azurerm'
-         command: 'custom'
-         outputTo: 'console'
-         customCommand: 'fmt'
-         environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
-         environmentAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
+    provider: 'azurerm'
+    command: 'custom'
+    outputTo: 'console'
+    customCommand: 'fmt'
+    environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
 
-# - task: TerraformTask@5
-#   displayName: 'TF Plan'
-#   inputs:
-#          provider: 'azurerm'
-#          command: 'plan'
-#          #commanOptions: '-out $(Build.SourceDirectory)/tfplanfile'
-#          environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
-#          environmentAzureRmOverrideSubscriptionID: 'cb107020-aeb2-4d94-951e-814d99170f88'
 - task: TerraformTask@5
+  displayName: 'TF Plan'
   inputs:
     provider: 'azurerm'
-    command: 'apply'
+    command: 'plan'
     environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
+
+# - task: TerraformTask@5
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'apply'
+#     environmentServiceNameAzureRM: 'AZURE PAY AS YOU GO(1)(cb107020-aeb2-4d94-951e-814d99170f88)'
 
 # - task: ArchiveFiles@2
 #   inputs:
